@@ -1,0 +1,55 @@
+## Figure
+figure.figsize: 10, 6
+figure.dpi: 100
+figure.facecolor: white
+figure.edgecolor: white
+
+## Axes
+axes.facecolor: white
+axes.edgecolor: 333333
+axes.linewidth: 0.8
+axes.grid: True
+axes.grid.axis: both
+axes.labelsize: 12
+axes.labelcolor: 333333
+axes.titlesize: 14
+axes.titleweight: bold
+axes.titlepad: 12
+axes.prop_cycle: cycler('color', ['1f77b4', 'ff7f0e', '2ca02c', 'd62728', '9467bd', '8c564b', 'e377c2', '7f7f7f'])
+
+## Grid
+grid.color: cccccc
+grid.linestyle: --
+grid.linewidth: 0.6
+grid.alpha: 0.7
+
+## Lines
+lines.linewidth: 2.0
+lines.markersize: 6
+
+## Legend
+legend.fontsize: 11
+legend.frameon: True
+legend.framealpha: 0.9
+legend.edgecolor: cccccc
+legend.loc: best
+
+## Ticks
+xtick.labelsize: 11
+xtick.color: 333333
+xtick.direction: out
+ytick.labelsize: 11
+ytick.color: 333333
+ytick.direction: out
+
+## Font
+font.family: sans-serif
+font.size: 12
+
+## Scatter
+scatter.marker: o
+
+## Saving
+savefig.dpi: 150
+savefig.bbox: tight
+savefig.facecolor: white
