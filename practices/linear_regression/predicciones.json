@@ -1,0 +1,28 @@
+[
+  {
+    "jornada": 32,
+    "fecha": "2026-04-10",
+    "home": "West Ham",
+    "away": "Wolves",
+    "prediccion": "H",
+    "prob_H": 0.552,
+    "prob_D": 0.232,
+    "prob_A": 0.216,
+    "confianza": 0.552,
+    "resultado": null,
+    "correcto": null
+  },
+  {
+    "jornada": 32,
+    "fecha": "2026-04-11",
+    "home": "Arsenal",
+    "away": "Bournemouth",
+    "prediccion": "H",
+    "prob_H": 0.648,
+    "prob_D": 0.204,
+    "prob_A": 0.148,
+    "confianza": 0.648,
+    "resultado": null,
+    "correcto": null
+  }
+]
