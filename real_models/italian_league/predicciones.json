@@ -1,1 +1,28 @@
-[]
+[
+  {
+    "jornada": 32,
+    "fecha": "2026-04-10",
+    "home": "Roma",
+    "away": "Pisa",
+    "prediccion": "H",
+    "prob_H": 0.651,
+    "prob_D": 0.256,
+    "prob_A": 0.093,
+    "confianza": 0.651,
+    "resultado": null,
+    "correcto": null
+  },
+  {
+    "jornada": 32,
+    "fecha": "2026-04-12",
+    "home": "Bologna",
+    "away": "Lecce",
+    "prediccion": "H",
+    "prob_H": 0.609,
+    "prob_D": 0.262,
+    "prob_A": 0.129,
+    "confianza": 0.609,
+    "resultado": null,
+    "correcto": null
+  }
+]

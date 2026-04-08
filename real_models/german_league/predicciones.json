@@ -1,0 +1,41 @@
+[
+  {
+    "jornada": 29,
+    "fecha": "2026-04-11",
+    "home": "RB Leipzig",
+    "away": "M'gladbach",
+    "prediccion": "H",
+    "prob_H": 0.595,
+    "prob_D": 0.292,
+    "prob_A": 0.113,
+    "confianza": 0.595,
+    "resultado": null,
+    "correcto": null
+  },
+  {
+    "jornada": 29,
+    "fecha": "2026-04-11",
+    "home": "St Pauli",
+    "away": "Bayern Munich",
+    "prediccion": "A",
+    "prob_H": 0.128,
+    "prob_D": 0.152,
+    "prob_A": 0.72,
+    "confianza": 0.72,
+    "resultado": null,
+    "correcto": null
+  },
+  {
+    "jornada": 29,
+    "fecha": "2026-04-12",
+    "home": "Stuttgart",
+    "away": "Hamburg",
+    "prediccion": "H",
+    "prob_H": 0.661,
+    "prob_D": 0.269,
+    "prob_A": 0.07,
+    "confianza": 0.661,
+    "resultado": null,
+    "correcto": null
+  }
+]
