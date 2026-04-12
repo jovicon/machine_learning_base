@@ -9,8 +9,8 @@
     "prob_D": 0.292,
     "prob_A": 0.113,
     "confianza": 0.595,
-    "resultado": null,
-    "correcto": null
+    "resultado": "H",
+    "correcto": "ACERTADO"
   },
   {
     "jornada": 29,
@@ -22,8 +22,8 @@
     "prob_D": 0.152,
     "prob_A": 0.72,
     "confianza": 0.72,
-    "resultado": null,
-    "correcto": null
+    "resultado": "A",
+    "correcto": "ACERTADO"
   },
   {
     "jornada": 29,
@@ -35,7 +35,7 @@
     "prob_D": 0.269,
     "prob_A": 0.07,
     "confianza": 0.661,
-    "resultado": null,
-    "correcto": null
+    "resultado": "H",
+    "correcto": "ACERTADO"
   }
 ]

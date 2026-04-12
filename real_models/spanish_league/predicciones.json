@@ -9,8 +9,8 @@
     "prob_D": 0.213,
     "prob_A": 0.104,
     "confianza": 0.683,
-    "resultado": null,
-    "correcto": null
+    "resultado": "D",
+    "correcto": "FALLADO"
   },
   {
     "jornada": 31,
@@ -22,8 +22,8 @@
     "prob_D": 0.229,
     "prob_A": 0.126,
     "confianza": 0.645,
-    "resultado": null,
-    "correcto": null
+    "resultado": "H",
+    "correcto": "ACERTADO"
   },
   {
     "jornada": 31,
@@ -35,60 +35,8 @@
     "prob_D": 0.271,
     "prob_A": 0.178,
     "confianza": 0.551,
-    "resultado": null,
-    "correcto": null
-  },
-  {
-    "jornada": 31,
-    "fecha": "2026-04-13",
-    "home": "Levante",
-    "away": "Getafe",
-    "prediccion": "H",
-    "prob_H": 0.582,
-    "prob_D": 0.249,
-    "prob_A": 0.169,
-    "confianza": 0.582,
-    "resultado": null,
-    "correcto": null
-  },
-  {
-    "jornada": 31,
-    "fecha": "2026-04-10",
-    "home": "Real Madrid",
-    "away": "Girona",
-    "prediccion": "H",
-    "prob_H": 0.683,
-    "prob_D": 0.213,
-    "prob_A": 0.104,
-    "confianza": 0.683,
-    "resultado": null,
-    "correcto": null
-  },
-  {
-    "jornada": 31,
-    "fecha": "2026-04-11",
-    "home": "Barcelona",
-    "away": "Espanol",
-    "prediccion": "H",
-    "prob_H": 0.645,
-    "prob_D": 0.229,
-    "prob_A": 0.126,
-    "confianza": 0.645,
-    "resultado": null,
-    "correcto": null
-  },
-  {
-    "jornada": 31,
-    "fecha": "2026-04-12",
-    "home": "Celta",
-    "away": "Oviedo",
-    "prediccion": "H",
-    "prob_H": 0.551,
-    "prob_D": 0.271,
-    "prob_A": 0.178,
-    "confianza": 0.551,
-    "resultado": null,
-    "correcto": null
+    "resultado": "A",
+    "correcto": "FALLADO"
   },
   {
     "jornada": 31,
