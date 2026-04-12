@@ -1,41 +1,83 @@
-[
-  {
-    "jornada": 29,
-    "fecha": "2026-04-11",
-    "home": "RB Leipzig",
-    "away": "M'gladbach",
-    "prediccion": "H",
-    "prob_H": 0.595,
-    "prob_D": 0.292,
-    "prob_A": 0.113,
-    "confianza": 0.595,
-    "resultado": "H",
-    "correcto": "ACERTADO"
+{
+  "liga": "Bundesliga",
+  "resumen_acumulado": {
+    "total_predicciones": 4,
+    "partidos_verificados": 3,
+    "acertados": 3,
+    "accuracy": 1.0,
+    "baseline": 0.43,
+    "diferencia_vs_baseline": 0.57
   },
-  {
-    "jornada": 29,
-    "fecha": "2026-04-11",
-    "home": "St Pauli",
-    "away": "Bayern Munich",
-    "prediccion": "A",
-    "prob_H": 0.128,
-    "prob_D": 0.152,
-    "prob_A": 0.72,
-    "confianza": 0.72,
-    "resultado": "A",
-    "correcto": "ACERTADO"
-  },
-  {
-    "jornada": 29,
-    "fecha": "2026-04-12",
-    "home": "Stuttgart",
-    "away": "Hamburg",
-    "prediccion": "H",
-    "prob_H": 0.661,
-    "prob_D": 0.269,
-    "prob_A": 0.07,
-    "confianza": 0.661,
-    "resultado": "H",
-    "correcto": "ACERTADO"
+  "jornadas": {
+    "29": {
+      "partidos_usados": 3,
+      "acertados": 3,
+      "accuracy_jornada": 1.0,
+      "predicciones": [
+        {
+          "jornada": 29,
+          "fecha": "2026-04-11",
+          "home": "RB Leipzig",
+          "away": "M'gladbach",
+          "prediccion": "H",
+          "prob_H": 0.595,
+          "prob_D": 0.292,
+          "prob_A": 0.113,
+          "confianza": 0.595,
+          "resultado": "H",
+          "correcto": true,
+          "estado": "verificado"
+        },
+        {
+          "jornada": 29,
+          "fecha": "2026-04-11",
+          "home": "St Pauli",
+          "away": "Bayern Munich",
+          "prediccion": "A",
+          "prob_H": 0.128,
+          "prob_D": 0.152,
+          "prob_A": 0.72,
+          "confianza": 0.72,
+          "resultado": "A",
+          "correcto": true,
+          "estado": "verificado"
+        },
+        {
+          "jornada": 29,
+          "fecha": "2026-04-12",
+          "home": "Stuttgart",
+          "away": "Hamburg",
+          "prediccion": "H",
+          "prob_H": 0.661,
+          "prob_D": 0.269,
+          "prob_A": 0.07,
+          "confianza": 0.661,
+          "resultado": "H",
+          "correcto": true,
+          "estado": "verificado"
+        }
+      ]
+    },
+    "30": {
+      "partidos_usados": 1,
+      "acertados": 0,
+      "accuracy_jornada": null,
+      "predicciones": [
+        {
+          "jornada": 30,
+          "fecha": "2026-04-18",
+          "home": "Leverkusen",
+          "away": "Augsburg",
+          "prediccion": "H",
+          "prob_H": 0.567,
+          "prob_D": 0.24,
+          "prob_A": 0.193,
+          "confianza": 0.567,
+          "resultado": null,
+          "correcto": null,
+          "estado": "pendiente"
+        }
+      ]
+    }
   }
-]
+}
