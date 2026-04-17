@@ -1,0 +1,294 @@
+════════════════════════════════════════════════════════════════════════════════
+  FOOTBALL LEAGUES ML PIPELINE - ESTRUCTURA FINAL
+════════════════════════════════════════════════════════════════════════════════
+
+pipelines/football_leagues/
+│
+├── __init__.py                    # Module exports
+├── config.py                      # Configuracion de ligas (LIGAS_CONFIG)
+├── data.py                        # DataLoader - Carga datos desde football-data.co.uk
+├── features.py                    # FeatureBuilder - Construccion de 52 features
+├── model.py                       # Entrenador, Reentrenador - Logica ML + XGBoost
+│
+├── scripts/
+│   ├── __init__.py
+│   ├── train.py                   # Entrenar desde cero (--liga german)
+│   ├── retrain.py                 # Reentrenar con datos frescos (--todas)
+│   └── status.py                  # Ver status de modelos (--detalle)
+│
+├── test_import.py                 # Verificar que todo se importa OK
+├── README.md                       # Documentacion principal (110 lineas)
+├── EJEMPLO_USO.md                 # Ejemplos de uso en terminal y notebooks
+└── ESTRUCTURA.txt                 # Este archivo
+
+
+════════════════════════════════════════════════════════════════════════════════
+  LIGAS SOPORTADAS
+════════════════════════════════════════════════════════════════════════════════
+
+✓ german     → Bundesliga (Alemania - D1)
+✓ premier    → Premier League (Inglaterra - E0)
+✓ spanish    → La Liga (España - SP1)
+✓ italian    → Serie A (Italia - I1)
+
+
+════════════════════════════════════════════════════════════════════════════════
+  FLUJO DE USO RAPIDO
+════════════════════════════════════════════════════════════════════════════════
+
+1️⃣  SETUP INICIAL (primera vez)
+   ───────────────────────────────────
+   cd pipelines/football_leagues
+   python test_import.py              # Verificar imports
+   python scripts/train.py --liga german
+
+
+2️⃣  MANTENIMIENTO (cada 3 jornadas = 27 partidos)
+   ────────────────────────────────────────────────
+   python scripts/retrain.py --liga german
+   python scripts/status.py --detalle
+
+
+3️⃣  MULTIPLES LIGAS
+   ─────────────────
+   python scripts/train.py --liga german --liga premier --liga spanish
+   python scripts/retrain.py --todas --threshold 0.02
+
+
+════════════════════════════════════════════════════════════════════════════════
+  CLASE ENTRENADOR
+════════════════════════════════════════════════════════════════════════════════
+
+from football_leagues.model import Entrenador
+from football_leagues.config import get_config
+
+config = get_config('german')
+entrenador = Entrenador(config)
+metricas = entrenador.entrenar()  # ~15 min
+
+# Retorna:
+{
+    'accuracy': 0.538,
+    'accuracy_alta_confianza': 0.644,
+    'logloss': 1.0168,
+    'n_alta_confianza': 59,
+    'baseline': 0.442,
+    'mejora_baseline': 0.096,
+}
+
+# Outputs:
+# - ../../real_models/german_league/modelo_german.pkl
+# - ../../real_models/german_league/versiones/modelo_2026-04-17.pkl
+
+
+════════════════════════════════════════════════════════════════════════════════
+  CLASE REENTRENADOR
+════════════════════════════════════════════════════════════════════════════════
+
+from football_leagues.model import Reentrenador
+from football_leagues.config import get_config
+
+config = get_config('german')
+reentrenador = Reentrenador(config)
+
+# Retorna True/False
+actualizado = reentrenador.retrain(umbral_degradacion=0.02)
+
+Logica:
+  ✓ Carga accuracy modelo anterior (53.8%)
+  ✓ Entrena con datos frescos
+  ✓ Compara: accuracy_nuevo >= 53.8% - 2% (51.8%)
+  ✓ Si pasa: actualiza modelo_german.pkl
+  ✗ Si no: mantiene modelo anterior
+
+
+════════════════════════════════════════════════════════════════════════════════
+  SCRIPTS CLI
+════════════════════════════════════════════════════════════════════════════════
+
+📊 train.py
+───────────
+python scripts/train.py --liga german
+python scripts/train.py --liga german --liga premier --liga spanish
+python scripts/train.py --lista
+
+Output:
+  ✓ Carga datos desde football-data.co.uk
+  ✓ Construye features (52 features)
+  ✓ Entrena XGBoost + Calibra
+  ✓ Evalua en test set
+  ✓ Guarda pkl versioned
+
+Tiempo: ~15 min por liga
+
+
+🔄 retrain.py
+──────────────
+python scripts/retrain.py --liga german
+python scripts/retrain.py --todas
+python scripts/retrain.py --liga german --threshold 0.01
+python scripts/retrain.py --lista
+
+Output:
+  ✓ Carga accuracy anterior
+  ✓ Detecta partidos nuevos
+  ✓ Reentrena si hay suficientes datos (>20 partidos)
+  ✓ Compara vs umbral y decide actualizar
+  ✓ Logs detallados de metricas
+
+Tiempo: ~15 min + depende de datos nuevos
+
+
+📈 status.py
+─────────────
+python scripts/status.py
+python scripts/status.py --liga german
+python scripts/status.py --detalle
+
+Output:
+  Liga: Bundesliga (german)
+    Fecha:         2026-04-08
+    Accuracy:      53.8%
+    Alta conf:     64.4% (59 partidos)
+    Train/Test:    1485 / 249
+    Desde entreno: 9 dias
+
+
+════════════════════════════════════════════════════════════════════════════════
+  CLASES AUXILIARES
+════════════════════════════════════════════════════════════════════════════════
+
+DataLoader (data.py)
+────────────────────
+loader = DataLoader(config)
+df = loader.cargar_datos_crudos()       # Carga desde URLs
+train, test = loader.dividir_train_test(df, '2526')
+equipos = loader.obtener_equipos(df)
+
+
+FeatureBuilder (features.py)
+─────────────────────────────
+builder = FeatureBuilder(df)
+
+# Metodos individuales:
+stats = builder.get_team_stats_v2('Bayern', fecha)          # 16 features
+h2h = builder.get_h2h_stats('Bayern', 'Augsburg', fecha)    # 3 features
+tabla = builder.get_tabla_posicion('Bayern', fecha)         # 4 features
+
+# Dataset completo:
+df_features = builder.construir_dataset()  # 52 features por partido
+
+
+════════════════════════════════════════════════════════════════════════════════
+  CONFIGURACION (config.py)
+════════════════════════════════════════════════════════════════════════════════
+
+LIGAS_CONFIG = {
+    'german': {
+        'codigo': 'D1',
+        'nombre': 'german_league',
+        'nombre_completo': 'Bundesliga',
+        'url_base': 'https://www.football-data.co.uk/mmz4281/{}/D1.csv',
+        'temporadas': ['2021', '2122', '2223', '2324', '2425', '2526'],
+        'temporada_test': '2526',
+        'baseline_local': 0.44,
+        'ruta_modelo': '../../real_models/german_league',
+    },
+    # ... premier, spanish, italian ...
+}
+
+Para agregar nueva liga:
+  1. Agregar entrada en LIGAS_CONFIG con codigo football-data.co.uk
+  2. Crear carpeta en ../../real_models/{nueva_liga}/
+  3. Ejecutar: python scripts/train.py --liga {nueva}
+
+
+════════════════════════════════════════════════════════════════════════════════
+  INTEGRACION CI/CD
+════════════════════════════════════════════════════════════════════════════════
+
+GitHub Actions Workflow (.github/workflows/retrain_modelos.yml)
+──────────────────────────────────────────────────────────────
+
+on:
+  schedule:
+    - cron: '0 2 * * 0'   # Cada domingo 2 AM
+
+jobs:
+  retrain:
+    steps:
+      - checkout
+      - setup-python
+      - pip install -r requirements.txt
+      - cd pipelines/football_leagues
+      - python scripts/retrain.py --todas --threshold 0.02
+      - commit changes
+
+
+Cron local (.bashrc / crontab)
+──────────────────────────────
+
+0 2 * * 0 cd /path/to/machine_learning_base && \
+  source .venv/bin/activate && \
+  cd pipelines/football_leagues && \
+  python scripts/retrain.py --todas >> logs/retrain.log 2>&1
+
+
+════════════════════════════════════════════════════════════════════════════════
+  ESTRUCTURA DE DATOS GUARDADOS
+════════════════════════════════════════════════════════════════════════════════
+
+Directorio: ../../real_models/german_league/
+
+modelo_german.pkl                      # Modelo principal (siempre el más reciente)
+versiones/
+  ├── modelo_2026-04-08.pkl           # Snapshot fecha 2026-04-08
+  ├── modelo_2026-04-09.pkl           # Snapshot fecha 2026-04-09
+  └── modelo_2026-04-17.pkl           # Snapshot fecha 2026-04-17
+
+Contenido:
+  {
+    'model_v3': CalibratedClassifierCV,
+    'feature_cols_v3': [...],
+    'le': LabelEncoder,
+    'df': DataFrame,
+    'accuracy': 0.538,
+    'accuracy_alta_confianza': 0.644,
+    'logloss': 1.0168,
+    'n_alta_confianza': 59,
+    'fecha_entrenamiento': '2026-04-08',
+    'temporadas': ['2021', '2122', ...],
+    'temporada_test': '2526',
+    'partidos_train': 1485,
+    'partidos_test': 249,
+  }
+
+
+════════════════════════════════════════════════════════════════════════════════
+  52 FEATURES GENERADAS
+════════════════════════════════════════════════════════════════════════════════
+
+Team Stats (8 * 2 = 16 features):
+  h_recent_gf_pg, h_recent_gc_pg, h_recent_dif_goles, h_recent_sot_f_pg,
+  h_recent_sot_c_pg, h_recent_win_rate, h_recent_draw_rate, h_recent_home_wr,
+  a_recent_gf_pg, a_recent_gc_pg, a_recent_dif_goles, a_recent_sot_f_pg,
+  a_recent_sot_c_pg, a_recent_win_rate, a_recent_draw_rate, a_recent_home_wr,
+
+Season Stats (8 * 2 = 16 features):
+  h_season_*, a_season_*
+
+Head-to-Head (3 features):
+  h2h_home_wr, h2h_draw_rate, h2h_away_wr
+
+Tabla Position (4 * 2 = 8 features):
+  h_tabla_posicion, h_tabla_pts_pg, h_tabla_dif_goles_szn, h_tabla_pct_posicion,
+  a_tabla_posicion, a_tabla_pts_pg, a_tabla_dif_goles_szn, a_tabla_pct_posicion,
+
+Diferenciales (6 features):
+  dif_recent_wr, dif_season_wr, dif_recent_gf, dif_recent_gc, dif_recent_dif,
+  dif_season_dif, home_advantage, dif_pts_pg, dif_posicion
+
+TOTAL: 16 + 16 + 3 + 8 + 9 = 52 features
+
+
+════════════════════════════════════════════════════════════════════════════════
