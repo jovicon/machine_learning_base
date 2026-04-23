@@ -48,7 +48,7 @@
     "prob_D": 0.249,
     "prob_A": 0.169,
     "confianza": 0.582,
-    "resultado": null,
-    "correcto": null
+    "resultado": "H",
+    "correcto": "ACERTADO"
   }
 ]
