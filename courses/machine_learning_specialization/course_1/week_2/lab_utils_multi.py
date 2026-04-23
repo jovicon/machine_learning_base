@@ -57,8 +57,8 @@ def load_house_data():
     return X, y
 
 
-def run_gradient_descent(X, y, iterations, alpha, compute_cost=compute_cost,
-                        compute_gradient=compute_gradient):
+def run_gradient_descent(X, y, iterations, alpha, compute_cost_fn=None,
+                        compute_gradient_fn=None):
     """
     Run gradient descent and return final parameters, cost history, and gradient history.
 
@@ -78,6 +78,11 @@ def run_gradient_descent(X, y, iterations, alpha, compute_cost=compute_cost,
     import copy
     import math
 
+    if compute_cost_fn is None:
+        compute_cost_fn = compute_cost
+    if compute_gradient_fn is None:
+        compute_gradient_fn = compute_gradient
+
     m, n = X.shape
     w = np.zeros(n)
     b = 0.0
@@ -91,7 +96,7 @@ def run_gradient_descent(X, y, iterations, alpha, compute_cost=compute_cost,
 
     for i in range(iterations):
         # Compute gradients
-        dj_db, dj_dw = compute_gradient(X, y, w, b)
+        dj_db, dj_dw = compute_gradient_fn(X, y, w, b)
 
         # Update parameters
         w = w - alpha * dj_dw
@@ -99,7 +104,7 @@ def run_gradient_descent(X, y, iterations, alpha, compute_cost=compute_cost,
 
         # Store history
         if i < 100000:  # Prevent memory exhaustion
-            cost = compute_cost(X, y, w, b)
+            cost = compute_cost_fn(X, y, w, b)
             hist['cost'].append(cost)
             hist['dj_dw'].append(dj_dw)
             hist['dj_db'].append(dj_db)
@@ -107,7 +112,7 @@ def run_gradient_descent(X, y, iterations, alpha, compute_cost=compute_cost,
 
         # Print progress
         if i % math.ceil(iterations / 10) == 0:
-            cost = compute_cost(X, y, w, b)
+            cost = compute_cost_fn(X, y, w, b)
             print(f"Iteration {i:4d}: Cost {cost:8.2f}")
 
     return w, b, hist
@@ -206,3 +211,65 @@ def plot_cost_i_w(X, y, hist):
 
     plt.tight_layout()
     plt.show()
+
+
+def zscore_normalize_features(X):
+    """
+    Computes z-score normalization (standardization) of features.
+
+    Args:
+      X (ndarray (m,n)): input data, m examples, n features
+
+    Returns:
+      x_norm (ndarray (m,n)): input normalized by column
+      mu (ndarray (n,)): mean of each feature
+      sigma (ndarray (n,)): standard deviation of each feature
+    """
+    mu = np.mean(X, axis=0)
+    sigma = np.std(X, axis=0)
+    x_norm = (X - mu) / sigma
+
+    return x_norm, mu, sigma
+
+
+def run_gradient_descent_feng(X, y, iterations, alpha, compute_cost_fn=None,
+                             compute_gradient_fn=None):
+    """
+    Run gradient descent for feature engineering / polynomial regression.
+
+    Args:
+      X (ndarray (m,n)): Data, m examples with n features
+      y (ndarray (m,)): target values
+      iterations (int): number of iterations to run
+      alpha (float): learning rate
+      compute_cost_fn: function to compute cost
+      compute_gradient_fn: function to compute gradient
+
+    Returns:
+      w (ndarray (n,)): final parameters
+      b (scalar): final bias
+    """
+    import math
+
+    if compute_cost_fn is None:
+        compute_cost_fn = compute_cost
+    if compute_gradient_fn is None:
+        compute_gradient_fn = compute_gradient
+
+    _, n = X.shape
+    w = np.zeros(n)
+    b = 0.0
+
+    for i in range(iterations):
+        dj_db, dj_dw = compute_gradient_fn(X, y, w, b)
+
+        w = w - alpha * dj_dw
+        b = b - alpha * dj_db
+
+        if i % math.ceil(iterations / 10) == 0:
+            cost = compute_cost_fn(X, y, w, b)
+            print(f"Iteration {i:4d}: Cost {cost:8.2f}")
+
+    print(f"w,b found by gradient descent: w: {w}, b: {b:0.4f}")
+
+    return w, b
