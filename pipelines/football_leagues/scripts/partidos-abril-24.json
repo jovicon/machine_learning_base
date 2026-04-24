@@ -1,0 +1,49 @@
+{
+  "premier": {
+    "fecha": "2026-04-24",
+    "jornada": 33,
+    "partidos": [
+      ["Sunderland", "Nott'm Forest"],
+      ["Fulham", "Aston Villa"],
+      ["Wolves", "Tottenham"],
+      ["West Ham", "Everton"],
+      ["Liverpool", "Crystal Palace"],
+      ["Arsenal", "Newcastle"],
+      ["Bournemouth", "Leeds"],
+      ["Burnley", "Man City"],
+      ["Brighton", "Chelsea"],
+      ["Man United", "Brentford"]
+    ]
+  },
+  "italian": {
+    "fecha": "2026-04-24",
+    "jornada": 34,
+    "partidos": [
+      ["Napoli", "Cremonese"],
+      ["Parma", "Pisa"],
+      ["Bologna", "Roma"],
+      ["Verona", "Lecce"],
+      ["Fiorentina", "Sassuolo"],
+      ["Genoa", "Como"],
+      ["Torino", "Inter"],
+      ["Milan", "Juventus"],
+      ["Cagliari", "Atalanta"],
+      ["Lazio", "Udinese"]
+    ]
+  },
+  "german": {
+    "fecha": "2026-04-24",
+    "jornada": 31,
+    "partidos": [
+      ["RB Leipzig", "Union Berlin"],
+      ["Mainz", "Bayern Munich"],
+      ["FC Koln", "Leverkusen"],
+      ["Augsburg", "Ein Frankfurt"],
+      ["Wolfsburg", "M'gladbach"],
+      ["Heidenheim", "St Pauli"],
+      ["Hamburg", "Hoffenheim"],
+      ["Stuttgart", "Werder Bremen"],
+      ["Dortmund", "Freiburg"]
+    ]
+  }
+}
